@@ -1,0 +1,5 @@
+{
+  "enable-proposed-api": [
+    "3timeslazy.vscodium-devpodcontainers",
+  ],
+}
