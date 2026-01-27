@@ -26,13 +26,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   jq \
   nano \
   vim \
+  locales \
   ca-certificates \
   curl \
   wget \
   tmux \
   && apt-get auto-remove -y \
   && apt-get clean -y && rm -rf /var/lib/apt/lists/* \
-  && chsh -s $(which bash) bun \
+  && echo "en_US.UTF-8 UTF-8" > /etc/locale.gen \
+  && locale-gen en_US.UTF-8 \
+  && chsh -s $(which zsh) bun \
   && echo 'export PS1="\e[01;32m\u\e[m:\e[01;34m\w\e[m\$ "' >> /home/bun/.bashrc
 
 ARG USERNAME=bun
@@ -79,7 +82,8 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
   -x
 
 # Install Claude
-RUN curl -fsSL https://claude.ai/install.sh | bash -s $CLAUDE_CODE_VERSION
+RUN curl -fsSL https://claude.ai/install.sh | bash -s $CLAUDE_CODE_VERSION \
+  && echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
 
 
 # Copy and set up firewall script
