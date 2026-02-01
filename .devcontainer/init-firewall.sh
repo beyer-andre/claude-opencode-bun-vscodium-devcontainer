@@ -97,7 +97,7 @@ for domain in \
     "vertexai.googleapis.com" \
     "api.cohere.com" \
     "api.groq.com" \
-    "api.perplexity.ai; do
+    "api.perplexity.ai"; do
     echo "Resolving $domain..."
     ips=$(dig +noall +answer A "$domain" | awk '$4 == "A" {print $5}')
     if [ -z "$ips" ]; then
